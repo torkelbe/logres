@@ -28,9 +28,17 @@ public class EggCartonSolution extends Solution {
 		return print;
 	}
 
-	@Override
 	public Solution copySolution() {
-		// TODO Auto-generated method stub
-		return null;
+		EggCartonSolution duplicate = new EggCartonSolution(board.length);
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; j < board.length; j++) {
+				duplicate.board[i][j] = board[i][j];
+			}
+		}
+		return duplicate;
+	}
+	
+	public float getFitness() {
+		return this.fitness;
 	}
 }

@@ -2,11 +2,12 @@ package simulatedAnnealing;
 
 public abstract class Solution {
 
-	private float fitness;
+	public float fitness = 0;
 	
 	/**
 	 * Returns a copy of itself
 	 */
 	public abstract Solution copySolution();
+	public abstract float getFitness();
 	
 }

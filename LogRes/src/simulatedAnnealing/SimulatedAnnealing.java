@@ -6,11 +6,10 @@ import java.util.Random;
 public class SimulatedAnnealing {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		EggCartonSolution hei = new EggCartonSolution(5);
-		System.out.println(hei);
-		EggCartonPuzzle initState = new EggCartonPuzzle();
-		System.out.println(initState.getInitialState());
+		
+		SimulatedAnnealing letsDoThis = new SimulatedAnnealing();
+		letsDoThis.problem = new EggCartonPuzzle();
+		letsDoThis.run();
 	}
 
 	public final int ITERATION_COUNT_LIMIT = 120;
@@ -25,6 +24,7 @@ public class SimulatedAnnealing {
 	
 	public void run() {
 		Solution solution = SA_search();
+		System.out.println("SimulatedAnnealing terminated with fitness = " + current.getFitness() +":");
 		System.out.println(solution);
 	}
 	
@@ -37,7 +37,7 @@ public class SimulatedAnnealing {
 		float T = INITIAL_TEMPERATURE;
 		
 		// Main search loop:
-		for (int i = 1; i < ITERATION_COUNT_LIMIT; i++) {
+		for (int i = 0; i < ITERATION_COUNT_LIMIT; i++) {
 			
 			// Scheduling; return if temperature==0:
 			T = schedule(i);
@@ -64,14 +64,15 @@ public class SimulatedAnnealing {
 				int k = rng.nextInt(neighbors.size());
 				current = neighbors.get(k);
 			}
+			System.out.println("\nIteration #"+i);
+			System.out.println(current);
 		}
 		
 		return current;
 	}
 	
 	/** 
-	 * Evaluates all successors and returns
-	 * the best-fitness successor
+	 * Evaluates all successors and returns the best-fitness successor
 	 */
 	public Solution chooseBestSuccessor(ArrayList<Solution> successors) {
 		Solution bestSolution = null;
