@@ -2,7 +2,7 @@ package simulatedAnnealing;
 
 public abstract class Solution {
 
-	public float fitness = 0;
+	public float fitness;
 	
 	/**
 	 * Returns a copy of itself

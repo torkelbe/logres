@@ -12,9 +12,9 @@ public class SimulatedAnnealing {
 		letsDoThis.run();
 	}
 
-	public final int ITERATION_COUNT_LIMIT = 120;
+	public final int ITERATION_COUNT_LIMIT = 30;
 	public final float INITIAL_TEMPERATURE = 100;
-	public final int SCHEDULING_FACTOR = 100;
+	public final int SCHEDULING_FACTOR = 1;
 	
 	SimulatedAnnealingProblem problem;
 	float targetFitness;
@@ -23,6 +23,7 @@ public class SimulatedAnnealing {
 
 	
 	public void run() {
+		System.out.println("Starting search...");
 		Solution solution = SA_search();
 		System.out.println("SimulatedAnnealing terminated with fitness = " + current.getFitness() +":");
 		System.out.println(solution);
@@ -41,16 +42,23 @@ public class SimulatedAnnealing {
 			
 			// Scheduling; return if temperature==0:
 			T = schedule(i);
-			if (T <= 0) return current;
+			if (T <= 0) {
+				System.out.println("END: Temperature reached 0");
+				return current;
+			}
 			
 			// Generating new neighbors and finding the best one:
 			ArrayList<Solution> neighbors = problem.generateSuccessors(current);
 			Solution next = chooseBestSuccessor(neighbors);
-			if (next == null) return current;	// If no neighbors are legal, return current.
+			if (next == null) {		// If no neighbors are legal, return current.
+				System.out.println("END: No valid neighbors");
+				return current;
+			}
 			
 			// Check if we have found solution; return if solution found:
 			if (problem.getFitness(next) >= targetFitness) {
 				current = next;
+				System.out.println("END: Solution found");
 				return current;
 			}
 			
@@ -64,10 +72,10 @@ public class SimulatedAnnealing {
 				int k = rng.nextInt(neighbors.size());
 				current = neighbors.get(k);
 			}
-			System.out.println("\nIteration #"+i);
+			System.out.println("Iteration #"+i);
 			System.out.println(current);
 		}
-		
+		System.out.println("END: iteration count.");
 		return current;
 	}
 	
@@ -76,7 +84,7 @@ public class SimulatedAnnealing {
 	 */
 	public Solution chooseBestSuccessor(ArrayList<Solution> successors) {
 		Solution bestSolution = null;
-		float bestFitness = 0;
+		float bestFitness = -1;
 		for (Solution next : successors) {
 			float nextFitness = problem.getFitness(next);
 			if (nextFitness > bestFitness) {
@@ -91,7 +99,7 @@ public class SimulatedAnnealing {
 	 * Scheduler 
 	 */
 	private float schedule(int time) {
-		return INITIAL_TEMPERATURE - time;
+		return (INITIAL_TEMPERATURE - time)*SCHEDULING_FACTOR;
 	}
 	
 }

@@ -5,6 +5,7 @@ public class EggCartonSolution extends Solution {
 	public char[][] board;	// <------ board[row][column]
 	
 	public EggCartonSolution(int size) {
+		fitness = 0;
 		
 		// initialize board:
 		board = new char[size][size];

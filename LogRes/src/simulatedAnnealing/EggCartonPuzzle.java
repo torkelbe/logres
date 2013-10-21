@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class EggCartonPuzzle implements SimulatedAnnealingProblem {
 
-	private final int BOARD_SIZE = 5;
-	private final int K = 2;
+	private final int BOARD_SIZE = 10;
+	private final int K = 3;
 	private final float TARGET_FITNESS = 1;
 	
 	/**
@@ -24,9 +24,11 @@ public class EggCartonPuzzle implements SimulatedAnnealingProblem {
 		
 		for (int i = 0; i < BOARD_SIZE; i++) {
 			int count = countEggsInRow(((EggCartonSolution)solution).board[i]);
+			count -= K;
 			if (count > 0) solutionViolations += count;
 		}
-		float fitness = 1 - (solutionViolations / maxViolations);
+		float fitness = (float)solutionViolations / (float)maxViolations;
+		fitness = 1 - fitness;
 		solution.fitness = fitness;
 		return fitness;
 	}
@@ -49,6 +51,7 @@ public class EggCartonPuzzle implements SimulatedAnnealingProblem {
 				EggCartonSolution newNeighbor = (EggCartonSolution) current.copySolution();
 				swapEgg(newNeighbor, offenders[0], offenders[1], j);
 				neighbors.add(newNeighbor);
+			} else {
 			}
 		}
 		return neighbors;
@@ -76,6 +79,7 @@ public class EggCartonPuzzle implements SimulatedAnnealingProblem {
 		}
 		
 		int[] offendingRows = {highRowIndex, lowRowIndex};
+//		System.out.println("["+offendingRows[0]+", "+offendingRows[1]+"]");
 		return offendingRows;
 	}
 
@@ -100,9 +104,12 @@ public class EggCartonPuzzle implements SimulatedAnnealingProblem {
 	 * @param column
 	 */
 	private void swapEgg(EggCartonSolution solution, int row1, int row2, int column) {
-		char temp = solution.board[row1][column];
-		solution.board[row1][column] = solution.board[row2][column];
-		solution.board[row1][column] = temp;
+//		char temp1 = solution.board[row1][column];
+//		char temp2 = solution.board[row2][column];
+//		solution.board[row1][column] = temp2;
+//		solution.board[row1][column] = temp1;
+		solution.board[row1][column] = '-';
+		solution.board[row2][column] = '0';
 	}
 
 	public Solution getInitialState() {
