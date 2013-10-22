@@ -6,7 +6,7 @@ public class EggCartonPuzzle implements SimulatedAnnealingProblem {
 
 	private final int BOARD_SIZE = 10;
 	private final int K = 3;
-	private final float TARGET_FITNESS = 1;
+	private final double TARGET_FITNESS = 1;
 	
 	/**
 	 * Returns fitness of solution.
@@ -16,7 +16,7 @@ public class EggCartonPuzzle implements SimulatedAnnealingProblem {
 	 * the fitness value is lower.
 	 * @param solution
 	 */
-	public float getFitness(Solution solution) {
+	public double getFitness(Solution solution) {
 		if (solution.fitness != 0) return solution.fitness;
 		
 		int maxViolations = K*(BOARD_SIZE - K);
@@ -27,7 +27,7 @@ public class EggCartonPuzzle implements SimulatedAnnealingProblem {
 			count -= K;
 			if (count > 0) solutionViolations += count;
 		}
-		float fitness = (float)solutionViolations / (float)maxViolations;
+		double fitness = (double)solutionViolations / (double)maxViolations;
 		fitness = 1 - fitness;
 		solution.fitness = fitness;
 		return fitness;
@@ -122,7 +122,7 @@ public class EggCartonPuzzle implements SimulatedAnnealingProblem {
 		return initialState;
 	}
 
-	public float getTargetFitness() {
+	public double getTargetFitness() {
 		return TARGET_FITNESS;
 	}
 

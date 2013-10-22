@@ -8,7 +8,7 @@ public interface SimulatedAnnealingProblem {
 	 * Returns the fitness of node.
 	 * Evaluates this if necessary.
 	 */
-	public float getFitness(Solution node);
+	public double getFitness(Solution node);
 	
 	/**
 	 * Generates new neighbors
@@ -17,5 +17,5 @@ public interface SimulatedAnnealingProblem {
 	public ArrayList<Solution> generateSuccessors(Solution current);
 	
 	public Solution getInitialState();
-	public float getTargetFitness();
+	public double getTargetFitness();
 }

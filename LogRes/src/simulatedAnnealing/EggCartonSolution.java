@@ -39,7 +39,7 @@ public class EggCartonSolution extends Solution {
 		return duplicate;
 	}
 	
-	public float getFitness() {
+	public double getFitness() {
 		return this.fitness;
 	}
 }
